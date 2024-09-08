@@ -1,0 +1,114 @@
+/* Admin Dashboard Container */
+.admin-dashboard-container {
+  background-color: white;
+  padding: 3rem;
+  max-width: 1200px;
+  width: 100%;              
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #64b5f6;
+  margin-top: 50px;        
+  margin-bottom: 50px;     
+}
+
+/* Parent container to center dashboard vertically and horizontally */
+.center-wrapper {
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  min-height: 100vh;       
+  padding: 20px;           
+  background-color: #f7fafc; 
+}
+
+/* Summary Section */
+.dashboard-summary {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.dashboard-summary div {
+  background-color: #e3f2fd;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  margin: 0 1rem;
+}
+
+.dashboard-summary h2 {
+  font-size: 1.75rem;
+  color: #1e88e5;
+  font-weight: bold;
+}
+
+.dashboard-summary p {
+  font-size: 3rem;
+  color: #1e88e5;
+  font-weight: bold;
+}
+
+/* Smaller font for the date in Check-Ins Today */
+.dashboard-summary .check-ins-today-date {
+  font-size: 0.875rem;  
+  color: #1e88e5;
+  font-weight: medium;
+  margin-bottom: 0.5rem; 
+}
+
+.dashboard-summary ul {
+  padding-top: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Check-Ins List */
+.check-ins-list table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.check-ins-list th, .check-ins-list td {
+  padding: 1.2rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.check-ins-list th {
+  background-color: #f0f4f8;
+  font-weight: bold;
+  color: #1e88e5;
+}
+
+.check-ins-list td {
+  color: #374151;
+}
+
+.check-ins-list tr:hover {
+  background-color: #e3f2fd;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .admin-dashboard-container {
+    padding: 1.5rem;
+  }
+
+  .dashboard-summary h2 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-summary p {
+    font-size: 2.5rem;
+  }
+
+  .check-ins-list th, .check-ins-list td {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+
