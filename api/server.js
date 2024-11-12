@@ -26,6 +26,11 @@ app.use(cors(corsOptions));
 // Parse incoming JSON requests
 app.use(express.json());
 
+// Root route for testing server availability
+app.get('/', (req, res) => {
+  res.send('API is running');
+});
+
 // Routes for check-ins
 app.use('/api', checkInRoutes);
 
