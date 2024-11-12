@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import api from '../api';
+import axios from 'axios';
 
 function CheckInForm() {
   const [employeeName, setEmployeeName] = useState('');
@@ -10,21 +10,22 @@ function CheckInForm() {
   const [formattedDateTime, setFormattedDateTime] = useState('');
   const location = useLocation();
 
-  // Extract location ID from URL query params
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    const locId = queryParams.get('location');  // Extract location ID from URL
+    const locId = queryParams.get('location');
     setLocationId(locId);
   }, [location]);
 
-  // Handle form submission and show success alert
   const handleSubmit = async () => {
     if (!employeeName || !locationId) return;
 
     try {
-      await api.post('/check-in', { employeeName, locationId, notes });
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/check-in`, {
+        employeeName,
+        locationId,
+        notes,
+      });
 
-      // Format the current date and time
       const now = new Date();
       const formattedDate = now.toLocaleDateString('en-GB', {
         day: '2-digit',
@@ -36,22 +37,18 @@ function CheckInForm() {
         minute: '2-digit',
       });
       setFormattedDateTime(`${formattedDate} at ${formattedTime}`);
-
-      // Show success alert
       setShowSuccessAlert(true);
     } catch (error) {
       alert('Error recording check-in');
     }
   };
 
-  // Close the success alert
   const handleCloseAlert = () => {
     setShowSuccessAlert(false);
   };
 
   return (
     <div className="check-in-container">
-      {/* Success Alert */}
       {showSuccessAlert && (
         <div className="success-alert bg-blue-100 border-l-4 border-blue-500 text-blue-900 p-4 w-full max-w-lg mx-auto rounded-lg shadow mb-4 flex justify-between items-center">
           <div>
@@ -76,7 +73,6 @@ function CheckInForm() {
           <p className="text-gray-600 mb-4 text-base">Loading location...</p>
         )}
 
-        {/* Employee Name Field */}
         <div className="w-full mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="employeeName">
             Employee Name
@@ -91,7 +87,6 @@ function CheckInForm() {
           />
         </div>
 
-        {/* Notes Field */}
         <div className="w-full mb-6">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="notes">
             Notes (Optional)
@@ -105,7 +100,6 @@ function CheckInForm() {
           />
         </div>
 
-        {/* Check-In Button */}
         <button
           className="bg-blue-500 text-white mt-6 py-2 px-5 rounded-lg w-full hover:bg-blue-600 hover:shadow-lg transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300"
           onClick={handleSubmit}
@@ -115,7 +109,6 @@ function CheckInForm() {
         </button>
       </div>
 
-      {/* Background Animation */}
       <div className="animated-background">
         <div className="bubble bubble1"></div>
         <div className="bubble bubble2"></div>

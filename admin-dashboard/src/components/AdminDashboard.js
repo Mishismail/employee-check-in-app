@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import api from '../api';
+import axios from 'axios';
 
 function AdminDashboard() {
   const [checkIns, setCheckIns] = useState([]);
@@ -11,28 +11,25 @@ function AdminDashboard() {
   useEffect(() => {
     const fetchCheckIns = async () => {
       try {
-        const { data } = await api.get('/admin/check-ins');
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/admin/check-ins`);
+        const data = res.data;
         setCheckIns(data);
 
-        // Format the current date to "08 September 2024"
         const options = { day: '2-digit', month: 'long', year: 'numeric' };
         const today = new Date().toLocaleDateString('en-GB', options);
         setCurrentDate(today);
 
-        // Calculate total check-ins for the current month
         const currentMonth = new Date().getMonth();
         const monthlyCheckIns = data.filter(
           (checkIn) => new Date(checkIn.checkInTime).getMonth() === currentMonth
         );
         setTotalCheckIns(monthlyCheckIns.length);
 
-        // Calculate total check-ins for the current day
         const dailyCheckIns = data.filter(
           (checkIn) => new Date(checkIn.checkInTime).toLocaleDateString('en-GB') === new Date().toLocaleDateString('en-GB')
         );
         setTotalDailyCheckIns(dailyCheckIns.length);
 
-        // Generate a summary of check-ins by location
         const summary = data.reduce((acc, checkIn) => {
           acc[checkIn.locationId] = acc[checkIn.locationId]
             ? acc[checkIn.locationId] + 1
@@ -53,7 +50,6 @@ function AdminDashboard() {
       <div className="admin-dashboard-container p-8 max-w-4xl mx-auto bg-white rounded-lg shadow-lg mt-10">
         <h1 className="text-4xl font-bold text-blue-700 mb-8 text-center">Admin Dashboard</h1>
 
-        {/* Summary Section */}
         <div className="dashboard-summary grid grid-cols-1 md:grid-cols-3 gap-12 mb-10 justify-center">
           <div className="bg-blue-100 p-6 rounded-lg shadow-md text-center">
             <h2 className="text-2xl font-bold text-blue-600 mb-4">Total Check-Ins for the Month</h2>
@@ -80,7 +76,6 @@ function AdminDashboard() {
           </div>
         </div>
 
-        {/* Check-In List */}
         <div className="check-ins-list">
           <h2 className="text-2xl font-bold text-blue-600 mb-6">Recent Check-Ins</h2>
           <div className="overflow-x-auto">
