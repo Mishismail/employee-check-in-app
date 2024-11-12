@@ -16,12 +16,12 @@ const corsOptions = {
   origin: [
     'http://localhost:3000',
     'http://localhost:3001',
-    'https://odwh-check-in.netlify.app/check-in' // Your deployed frontend URL
+    'https://admin-dash-checkin.netlify.app',  // Admin Dashboard URL
+    'https://odwh-check-in.netlify.app'        // Check-In Page URL
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 };
-
 app.use(cors(corsOptions));
 
 app.use(express.json());
