@@ -45,11 +45,31 @@ function AdminDashboard() {
     fetchCheckIns();
   }, []);
 
+  // Handle QR code generation
+  const handleGenerateQRCodes = async () => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/admin/generate-qr-codes`);
+      alert(response.data.message); // Show success message from the backend
+    } catch (error) {
+      alert('Failed to generate QR codes');
+      console.error('Error generating QR codes:', error);
+    }
+  };
+
   return (
     <div className="center-wrapper">
       <div className="admin-dashboard-container p-8 max-w-4xl mx-auto bg-white rounded-lg shadow-lg mt-10">
         <h1 className="text-4xl font-bold text-blue-700 mb-8 text-center">Admin Dashboard</h1>
 
+        {/* QR Code Generation Button */}
+        <button
+          onClick={handleGenerateQRCodes}
+          className="bg-blue-500 text-white py-2 px-5 rounded-lg hover:bg-blue-600 transition duration-300 mb-8"
+        >
+          Generate QR Codes
+        </button>
+
+        {/* Summary Section */}
         <div className="dashboard-summary grid grid-cols-1 md:grid-cols-3 gap-12 mb-10 justify-center">
           <div className="bg-blue-100 p-6 rounded-lg shadow-md text-center">
             <h2 className="text-2xl font-bold text-blue-600 mb-4">Total Check-Ins for the Month</h2>
@@ -76,6 +96,7 @@ function AdminDashboard() {
           </div>
         </div>
 
+        {/* Check-In List */}
         <div className="check-ins-list">
           <h2 className="text-2xl font-bold text-blue-600 mb-6">Recent Check-Ins</h2>
           <div className="overflow-x-auto">
@@ -117,9 +138,3 @@ function AdminDashboard() {
 }
 
 export default AdminDashboard;
-
-
-
-
-
-

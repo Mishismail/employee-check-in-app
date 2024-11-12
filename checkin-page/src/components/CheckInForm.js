@@ -39,7 +39,8 @@ function CheckInForm() {
       setFormattedDateTime(`${formattedDate} at ${formattedTime}`);
       setShowSuccessAlert(true);
     } catch (error) {
-      alert('Error recording check-in');
+      console.error('Error recording check-in:', error);
+      alert('Error recording check-in. Please try again later.');
     }
   };
 
